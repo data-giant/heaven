@@ -6,6 +6,7 @@ import (
 	"heaven/storage/mysql"
 	"time"
 	"strconv"
+	"github.com/thinkeridea/go-extend/exnet"
 )
 
 func slient(w http.ResponseWriter, r *http.Request, ps httprouter.Params)  {
@@ -14,10 +15,11 @@ func slient(w http.ResponseWriter, r *http.Request, ps httprouter.Params)  {
 
 var st = mysql.NewStorage()
 
+
 func Miner(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	record := map[string]string{
 		"app_id": ps.ByName("app_id"),
-		"client_ip": ps.ByName("client_ip"),
+		"client_ip": exnet.ClientPublicIP(r),
 		"client_time": ps.ByName("client_time"),
 		"server_time": strconv.FormatInt(time.Now().Unix(), 10),
 		"sdk_version": ps.ByName("sdk_version"),
